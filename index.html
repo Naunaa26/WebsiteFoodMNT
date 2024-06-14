@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+        *{
+            font-family: "Merriweather", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+ 
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .text-black {
+            color: #000;
+        }
+
+        #agreeButton.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        body::-webkit-scrollbar{
+            display: none;
+        }
+
+
+        body.disable-scroll {
+            overflow: hidden;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content::-webkit-scrollbar{
+            display: none;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+
+        .modal-img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .hero-bg {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            animation: slideshow 20s infinite;
+        }
+
+        .button-hover {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button-hover:hover {
+            background-color: #003f1a;
+            transform: scale(1.05);
+        }
+
+        .toggle__dot {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .bg-gray-900 {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .text-gray-900 {
+            color: #333;
+        }
+
+        .bg-gray-100 {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .toggle__dot {
+            transition: transform 0.3s ease;
+        }
+
+        #bg-switch:checked+.toggle__line {
+            background-color: #48bb78;
+        }
+
+        #bg-switch:checked+.toggle__line .toggle__dot {
+            transform: translateX(100%);
+        }
+
+
+        @keyframes slideshow {
+            0% {
+                background-image: url('https://images.unsplash.com/photo-1652862730779-c4f87896c7a7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            }
+
+            25% {
+                background-image: url('https://lh4.googleusercontent.com/saMwXwERCHPTHDnvcsPbddNNMvRqeAGHePqBVwtmLVqcDiQVfuWvSh5axYqwSGYxngv4ypXqtFkNj7a7d6tN7nJTd6G2CEsCVAarolEeLWfcxJgRY8pLydB4b9-MeSYdCgAqlFD3pYKT70JzK5C48g');
+            }
+
+            50% {
+                background-image: url('https://wallpapers.com/images/hd/cafe-background-a9tquohehoaxa4y8.jpg');
+            }
+
+            75% {
+                background-image: url('https://plus.unsplash.com/premium_photo-1683121372345-cce0d85768a3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            }
+
+            100% {
+                background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1447&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #welcomePopup {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(26, 32, 44, 0.5); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            animation: fadeIn 0.5s;
+            border-radius: 8px;
+        }
+
+        .close {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 24px;
+            color: #aaa;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+
+        .menu-item {
+            opacity: 0;
+            animation: fadeInMenu 0.5s ease-in-out forwards;
+            color: #333;
+        }
+
+        @keyframes fadeInMenu {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    @media (max-width: 640px) {
+        #welcomePopup .bg-white {
+            width: 90%; 
+            max-width: 100%; 
+        }
+        #welcomePopup .text-2xl {
+            font-size: 1.5rem; 
+        }
+        #welcomePopup .text-lg {
+            font-size: 1rem; 
+        }
+        #welcomePopup .text-base {
+            font-size: 0.875rem; 
+        }
+        #welcomePopup .p-4 {
+            padding: 2rem; 
+        }
+        #welcomePopup .mb-4 {
+            margin-bottom: 1rem; 
+        }
+    }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="welcomePopup"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center opacity-0 pointer-events-none">
+        <div class="bg-white p-8 rounded-lg shadow-lg animation-fade-in animation-duration-300 animation-fill-forwards">
+            <h1 class="text-[24px] font-bold mb-4 text-black">Welcome to Naufal Delicious Restaurant!</h1>
+            <p class="mb-4 text-black text-[16px]">Thank you for visiting my website restaurant,please search for the food and
+                beverages you wish to order. </p>
+            <div class="flex justify-center items-center mb-4">
+                <input type="checkbox" id="agreeCheckbox" class="mr-2">
+                <label for="agreeCheckbox" class="text-black text-[14px]">I agree to visit your website</label>
+            </div>
+            <div class="flex justify-between">
+                <button id="declineButton"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Decline</button>
+                <button id="agreeButton"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-green-900 shadow-lg fixed w-full z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-white max-lg:text-2xl">Naufal Delicious Restaurant</div>
+            <nav class="hidden lg:flex space-x-6 text-white ml-[35rem]">
+                <a href="#home" class="hover:text-gray-300 transition duration-300">Home</a>
+                <a href="#about" class="hover:text-gray-300 transition duration-300">About</a>
+                <a href="#menu" class="hover:text-gray-300 transition duration-300">Menu</a>
+                <a href="#search" class="hover:text-gray-300 transition duration-300">Search</a>
+            </nav>
+            <button id="menu-btn" class="text-white focus:outline-none lg:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <label for="bg-switch" class="flex items-center cursor-pointer ml-4">
+                <div class="relative">
+                    <input id="bg-switch" type="checkbox" class="hidden">
+                    <div class="toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                    <div id="toggle-dot" class="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 top-[-4px]"></div>
+                </div>
+            </label>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden bg-green-900 text-white text-center">
+            <a href="#home" class="block px-6 py-2 hover:bg-green-700 transition duration-300">Home</a>
+            <a href="#about" class="block px-6 py-2 hover:bg-green-700 transition duration-300">About</a>
+            <a href="#menu" class="block px-6 py-2 hover:bg-green-700 transition duration-300">Menu</a>
+            <a href="#search" class="block px-6 py-2 hover:bg-green-700 transition duration-300">Search</a>
+        </div>
+    </header>
+
+    <section id="home" class="hero-bg h-screen flex items-center justify-center text-white">
+        <div class="text-center fade-in">
+            <h1 class="text-5xl font-bold mb-8 max-lg:text-[32px] max-lg:max-w-96">
+                <span id="typed-text"></span>
+            </h1>
+            <p class="text-[24px] mb-10 max-w-[55rem] max-lg:text-[16px]">
+                Experience the ultimate relaxing experience with us and you will
+                taste the delicious cuisine and beverages that will be provided in our shop.
+            </p>
+            <a href="#menu" class="bg-green-500 text-white px-6 py-3 rounded-full text-lg button-hover">Explore Menu</a>
+        </div>
+    </section>
+
+
+    <section id="about" class="p-4 lg:p-8 bg-gray-100 fade-in">
+        <div class="container mx-auto px-4 lg:px-6 text-center">
+            <h2 class="text-3xl max-lg:text-3xl font-bold mb-4 lg:mb-6">About Us</h2>
+            <p class="text-lg max-lg:text-[14px] mb-4 lg:mb-8">
+                Savor the essence of culinary excellence at Naufal Delicious Restaurant. Our commitment to fresh, quality
+                ingredients, combined with a sprinkle of passion, ensures every visit is a flavorful adventure. Welcome to a
+                dining experience where every bite is crafted with care and every moment is cherished. Indulge in the rich
+                history of flavor at Naufal Delicious Restaurant, founded on June 26, 2007. Since our inception, we've been
+                dedicated to infusing every dish with a blend of fresh ingredients and heartfelt passion. Join us as we
+                continue to create memorable culinary experiences that have delighted guests for over a decade.
+            </p>
+            <div class="flex justify-center">
+                <img src="https://png.pngtree.com/thumb_back/fw800/background/20230518/pngtree-man-with-chef-coat-working-in-kitchen-of-a-restaurant-close-image_2537297.jpg"
+                    alt="Chef" class="rounded shadow-md hover:shadow-lg w-full lg:w-[30rem] h-auto lg:h-[20rem]">
+            </div>
+        </div>
+    </section>
+
+    <section id="search" class="p-8 bg-gray-100 fade-in">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl max-lg:text-3xl font-bold mb-8">Search Menu</h2>
+            <form class="w-full max-w-lg mx-auto flex flex-col sm:flex-row items-center" id="searchForm">
+                <div class="w-full relative mb-4 sm:mb-0 sm:mr-4">
+                    <label for="searchInput" class="sr-only">Search Your Menu..</label>
+                    <input id="searchInput" type="text" placeholder="Search Your Menu.."
+                        class="w-full px-4 py-2 rounded bg-gray-200 border border-gray-300 focus:outline-none focus:border-green-500 transition duration-300">
+                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                            <g fill="#616161">
+                                <path d="m29.175 31.99l2.828-2.827l12.019 12.019l-2.828 2.827z"/>
+                                <circle cx="20" cy="20" r="16"/>
+                            </g>
+                            <path fill="#37474F" d="m32.45 35.34l2.827-2.828l8.696 8.696l-2.828 2.828z"/>
+                            <circle cx="20" cy="20" r="13" fill="#64B5F6"/>
+                            <path fill="#BBDEFB" d="M26.9 14.2c-1.7-2-4.2-3.2-6.9-3.2s-5.2 1.2-6.9 3.2c-.4.4-.3 1.1.1 1.4c.4.4 1.1.3 1.4-.1C16 13.9 17.9 13 20 13s4 .9 5.4 2.5c.2.2.5.4.8.4c.2 0 .5-.1.6-.2c.4-.4.4-1.1.1-1.5z"/>
+                        </svg>
+                    </span>
+                </div>
+                <button type="submit"
+                    class="bg-green-500 text-white px-6 py-3 rounded-full text-lg button-hover">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <p>Your menu no results found.</p>
+        </div>
+    </div>
+
+    <section id="menu" class="py-20 bg-gray-100 fade-in">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl max-lg:text-3xl font-bold mb-8">Recomended Menu</h2>
+            <div id="menuItems" class="flex flex-wrap justify-center">
+
+                <div class="w-full md:w-1/2 lg:w-1/3 p-4 hover-zoom menu-item">
+                    <div class="bg-white rounded shadow-md p-6">
+                        <img src="https://source.unsplash.com/300x200/?food" alt="Dish 1" class="mb-4 rounded">
+                        <h3 class="text-xl font-semibold mb-2">Dish 1</h3>
+                        <p class="text-gray-700">Delicious and mouth-watering dish to satisfy your taste buds.</p>
+                        <p class="mt-2 text-gray-600">Category: Appetizer</p>
+                        <p class="text-gray-600">Country: Vegetarian</p> 
+                        <p class="mt-4 font-bold">$12.99</p>
+                    </div>
+                </div>
+            </div>
+
+            <button id="loadMoreBtn" onclick="loadMore()"
+                class="mt-8 bg-green-500 text-white px-6 py-3 rounded-full text-lg button-hover">Load
+                More
+            </button>
+        </div>
+    </section>
+
+    <footer id="footer" class="py-8 bg-gray-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-between">
+                <div class="w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-4">Location</h3>
+                    <p>Jl. Mangga Blok E 34 No 3</p>
+                    <p>Bekasi, Indonesia</p>
+                </div>
+                <div class="w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <p>Email: bluenaufal7@gmail.com</p>
+                    <p>Phone: +6881211783201</p>
+                </div>
+                <div class="w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-4">Opening Hours</h3>
+                    <p>Monday - Friday: 08:00 AM - 10:00 PM</p>
+                    <p>Saturday - Sunday: 07:00 AM - 12:00 PM</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-between mt-8">
+                <div class="w-full md:w-1/2 lg:w-1/3 md:pr-2">
+                    <h3 class="text-lg font-semibold mb-4">Contact Form</h3>
+                    <form class="max-w-lg contact-form text-gray-900">
+
+                        <div class="mb-4">
+                            <input type="text" placeholder="Your Name"
+                                class="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-green-500 transition duration-300">
+                        </div>
+                        <div class="mb-4">
+                            <input type="email" placeholder="Your Email"
+                                class="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-green-500 transition duration-300">
+                        </div>
+                        <div class="mb-4">
+                            <textarea placeholder="Your Message"
+                                class="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-green-500 transition duration-300"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="bg-green-500 text-white px-6 py-3 rounded-full text-lg button-hover">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+
+</body>
+
+</html>
